@@ -242,12 +242,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <Header userEmail={userEmail} onLogOut={handleLogOut} />
       <Switch>
-        <Route path="/sign-up">
-          <Register onRegister={handleRegister} />
-        </Route>
-        <Route path="/sign-in">
-          <Login onLogin={handleAuthorization} />
-        </Route>
         <ProtectedRoute
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
@@ -256,15 +250,18 @@ function App() {
           onCardLike={handleCardLike}
           onCardDelete={handleCardDeleteClick}
           cards={cards}
-          exact
-          path="/"
           component={Main}
           loggedIn={loggedIn}
+          exact
+          path="/"
         />
-
-        <Route exact path="/">
-          {!loggedIn && <Redirect to="/sign-in" />}
+        <Route path="/sign-up">
+          <Register onRegister={handleRegister} />
         </Route>
+        <Route path="/sign-in">
+          <Login onLogin={handleAuthorization} />
+        </Route>
+
         <Footer />
       </Switch>
 
