@@ -16,6 +16,7 @@ import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
 import { useHistory } from 'react-router-dom';
 import * as ApiAuth from '../utils/ApiAuth';
+import NotFound from './NotFound';
 
 function App() {
   // =================================================
@@ -258,13 +259,16 @@ function App() {
         <Route path="/sign-up">
           <Register onRegister={handleRegister} />
         </Route>
+
         <Route path="/sign-in">
           <Login onLogin={handleAuthorization} />
         </Route>
 
-        <Footer />
+        <Route path="*">
+          <NotFound />
+        </Route>
       </Switch>
-
+      <Footer />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
