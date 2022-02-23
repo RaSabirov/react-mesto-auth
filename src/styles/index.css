@@ -17,6 +17,7 @@
 @import url('../blocks/header/__auth/header__auth.css');
 @import url('../blocks/header/__email/header__email.css');
 @import url('../blocks/header/__sign-out/header__sign-out.css');
+@import url('../blocks/header/__profile-container/header__profile-container.css');
 
 /* Блок Profile */
 @import url('../blocks/profile/profile.css');

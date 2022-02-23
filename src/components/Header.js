@@ -20,12 +20,12 @@ function Header({ userEmail, onLogOut }) {
       </Route>
 
       <Route exact path={'/'}>
-        <p className="header__email">
-          {userEmail}
+        <div className="header__profile-container">
+          <p className="header__email">{userEmail}</p>
           <Link to="/sign-in" className="header__sign-out" onClick={onLogOut}>
             Выйти
           </Link>
-        </p>
+        </div>
       </Route>
     </header>
   );
