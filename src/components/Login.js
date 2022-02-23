@@ -1,5 +1,6 @@
 import '../styles/sign.css';
 import React from 'react';
+import AuthForm from './AuthForm';
 
 function Login({ onLogin }) {
   const [email, setEmail] = React.useState('');
@@ -22,37 +23,16 @@ function Login({ onLogin }) {
   }
 
   return (
-    <section className="login">
-      <div className="sign">
-        <p className="sign__welcome">Вход</p>
-        <form className="sign__form" onSubmit={handleSubmit}>
-          <input
-            className="sign__input"
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            required
-            value={email}
-            onChange={handleChande}
-          />
-          <input
-            className="sign__input"
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Пароль"
-            value={password}
-            onChange={handleChande}
-            autoComplete="off"
-            required
-          />
-          <button type="submit" className="sign__button">
-            Войти
-          </button>
-        </form>
-      </div>
-    </section>
+    <AuthForm
+      section="login"
+      title="Вход"
+      submit={handleSubmit}
+      onChange={handleChande}
+      submitName="Войти"
+      emailValue={email}
+      passwordValue={password}
+      errMessage="Ошибка: Неверно введен пароль, повторите попытку"
+    />
   );
 }
 

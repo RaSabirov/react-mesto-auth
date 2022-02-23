@@ -1,6 +1,7 @@
 import '../styles/sign.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AuthForm from './AuthForm';
 
 function Register({ onRegister }) {
   const [email, setEmail] = React.useState('');
@@ -20,42 +21,23 @@ function Register({ onRegister }) {
   }
 
   return (
-    <section className="register">
-      <div className="sign">
-        <p className="sign__welcome ">Регистрация</p>
-        <form className="sign__form" onSubmit={handleSubmit}>
-          <input
-            className="sign__input"
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={handleChande}
-            required
-          />
-          <input
-            className="sign__input"
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Пароль"
-            value={password}
-            onChange={handleChande}
-            autoComplete="off"
-            required
-          />
-          <button type="submit" className="sign__button">
-            Зарегистрироваться
-          </button>
-        </form>
-        <div className="sign__signin">
-          <Link to="/sign-in" className="sign__login-link">
-            Уже зарегистрированы? Войти
-          </Link>
-        </div>
+    <>
+      <AuthForm
+        section="register"
+        title="Регистрация"
+        submit={handleSubmit}
+        onChange={handleChande}
+        submitName="Зарегистрироваться"
+        emailValue={email}
+        passwordValue={password}
+        errMessage="Пароль должен содержать 8 или более символов, имеющих по крайней мере одно число, и одну букву верхнего и нижнего регистра"
+      />
+      <div className="sign__signin">
+        <Link to="/sign-in" className="sign__login-link">
+          Уже зарегистрированы? Войти
+        </Link>
       </div>
-    </section>
+    </>
   );
 }
 
