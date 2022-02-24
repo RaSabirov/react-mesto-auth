@@ -30,7 +30,6 @@ function Register({ onRegister }) {
         submitName="Зарегистрироваться"
         emailValue={email}
         passwordValue={password}
-        errMessage="Пароль должен содержать 8 или более символов, имеющих по крайней мере одно число, и одну букву верхнего и нижнего регистра"
       />
       <div className="sign__signin">
         <Link to="/sign-in" className="sign__login-link">

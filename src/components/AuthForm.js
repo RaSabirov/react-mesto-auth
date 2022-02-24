@@ -3,7 +3,7 @@ import React from 'react';
 
 // Универсальная форма для форм регистрации и входа
 
-function AuthForm({ section, title, submit, emailValue, passwordValue, onChange, submitName, errMessage }) {
+function AuthForm({ section, title, submit, emailValue, passwordValue, onChange, submitName }) {
   return (
     <section className={section}>
       <div className="sign">
@@ -28,9 +28,8 @@ function AuthForm({ section, title, submit, emailValue, passwordValue, onChange,
             value={passwordValue}
             onChange={onChange}
             autoComplete="off"
+            minLength="5"
             required
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title={errMessage}
           />
           <button type="submit" className="sign__button">
             {submitName}

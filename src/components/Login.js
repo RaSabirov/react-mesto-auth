@@ -31,7 +31,6 @@ function Login({ onLogin }) {
       submitName="Войти"
       emailValue={email}
       passwordValue={password}
-      errMessage="Ошибка: Неверно введен пароль, повторите попытку"
     />
   );
 }
