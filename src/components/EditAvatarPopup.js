@@ -5,7 +5,7 @@ import PopupWithForm from './PopupWithForm';
 function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, isLoading }) {
   const [avatar, setAvatar] = React.useState('');
 
-  function handleChangeAvatar(evt) {
+  function handleChange(evt) {
     setAvatar(evt.target.value);
   }
 
@@ -44,7 +44,7 @@ function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, isLoading }) {
           autoComplete="off"
           id="linkImg-input"
           value={avatar ?? ''}
-          onChange={handleChangeAvatar}
+          onChange={handleChange}
         />
 
         <span className="popup__input-error" id="linkImg-input-error"></span>

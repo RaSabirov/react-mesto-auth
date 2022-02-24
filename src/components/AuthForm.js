@@ -2,7 +2,6 @@ import '../styles/sign.css';
 import React from 'react';
 
 // Универсальная форма для форм регистрации и входа
-
 function AuthForm({ section, title, submit, emailValue, passwordValue, onChange, submitName }) {
   return (
     <section className={section}>

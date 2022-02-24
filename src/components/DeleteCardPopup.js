@@ -5,9 +5,9 @@ function DeleteCardPopup({ isOpen, onClose, isLoading, onDeleteCard }) {
   function handleSubmit(evt) {
     // Запрещаем браузеру переходить по адресу формы
     evt.preventDefault();
-
     onDeleteCard();
   }
+
   return (
     <PopupWithForm /* Форма запрос на удаление "Вы уверены?" */
       namePopup="del-request"

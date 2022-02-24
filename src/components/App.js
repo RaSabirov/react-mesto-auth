@@ -44,7 +44,7 @@ function App() {
   const [isLoadingDeletePopup, setIsLoadingDeletePopup] = React.useState(false);
 
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [regSuccess, setRegSuccess] = React.useState(false);
+  const [isRegistrationSuccess, setIsRegistrationSuccess] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const history = useHistory();
@@ -70,6 +70,12 @@ function App() {
       })
       .catch((err) => alert('Ошибка загрузки данных с сервера:', err));
   }, []);
+
+  // Эффект который будет проверять токен при загрузки страницы,
+  // чтобы не выбивало сессию при ребуте страницы
+  React.useEffect(() => {
+    tokenCheck();
+  }, [loggedIn]);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -146,15 +152,15 @@ function App() {
       .then((res) => {
         if (res) {
           setLoggedIn(true);
-          setRegSuccess(true);
+          setIsRegistrationSuccess(true);
           setIsInfoTooltipOpen(true);
           history.push('/sign-in');
         }
       })
       .catch((err) => {
         setIsInfoTooltipOpen(true);
-        setRegSuccess(false);
-        return console.log(err);
+        setIsRegistrationSuccess(false);
+        console.log('Ошибка регистрации:', err);
       });
   }
 
@@ -166,12 +172,13 @@ function App() {
           setLoggedIn(true);
           setUserEmail(email);
           history.push('/');
+          console.log('Время входа:', new Date().toLocaleTimeString());
         }
       })
       .catch((err) => {
         setIsInfoTooltipOpen(true);
-        setRegSuccess(false);
-        return console.log(err);
+        setIsRegistrationSuccess(false);
+        console.log('Ошибка входа в систему:', err);
       });
   }
 
@@ -187,7 +194,7 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log('Ошибка проверки токена:', err);
         });
     }
   }
@@ -197,11 +204,8 @@ function App() {
     setLoggedIn(false);
     setUserEmail('');
     history.push('/sign-in');
+    console.log('Время выхода:', new Date().toLocaleTimeString());
   }
-
-  React.useEffect(() => {
-    tokenCheck();
-  }, [loggedIn]);
 
   // =================================================
   // ===== Функции-обработчики для открытия попапов
@@ -243,7 +247,11 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <Header userEmail={userEmail} onLogOut={handleLogOut} />
       <Switch>
-        <ProtectedRoute
+        <ProtectedRoute /* Защита контента главной страницы от неавторизованных пользователей */
+          component={Main}
+          loggedIn={loggedIn}
+          exact
+          path="/"
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -251,10 +259,6 @@ function App() {
           onCardLike={handleCardLike}
           onCardDelete={handleCardDeleteClick}
           cards={cards}
-          component={Main}
-          loggedIn={loggedIn}
-          exact
-          path="/"
         />
         <Route path="/sign-up">
           <Register onRegister={handleRegister} />
@@ -269,41 +273,46 @@ function App() {
         </Route>
       </Switch>
       <Footer />
-      <EditProfilePopup
+      <EditProfilePopup /* Попап редактирования данных профиля */
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
         isLoading={isLoadingEditPopup}
       />
-      <EditAvatarPopup
+      <EditAvatarPopup /* Попап смены аватарки профиля */
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}
         isLoading={isLoadingAvatarPopup}
       />
 
-      <AddPlacePopup
+      <AddPlacePopup /* Попап добавлении новой карточки в список */
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}
         isLoading={isLoadingAddPopup}
       />
 
-      <DeleteCardPopup
+      <DeleteCardPopup /* Попап подтверждение при удалении карточки */
         isOpen={isDeleteCardPopupOpen}
         onClose={closeAllPopups}
         onDeleteCard={handleDeleteCardSubmit}
         isLoading={isLoadingDeletePopup}
       />
 
-      <ImagePopup
+      <ImagePopup /* Попап открытия превью картинки (при клике) */
         namePopup="image"
         isOpen={!!selectedCard.name && !!selectedCard.link}
         card={selectedCard}
         onClose={closeAllPopups}
         isImagePopup={selectedCard}
       />
-      <InfoTooltip success={regSuccess} isOpen={isInfoTooltipOpen} onClose={closeAllPopups} namePopup="infoTool" />
+      <InfoTooltip /* Попап уведомление о регистрации (успешно/неуспешно) */
+        namePopup="infoTool"
+        isSuccess={isRegistrationSuccess}
+        isOpen={isInfoTooltipOpen}
+        onClose={closeAllPopups}
+      />
     </CurrentUserContext.Provider>
   );
 }

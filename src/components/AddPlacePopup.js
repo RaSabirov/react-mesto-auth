@@ -14,12 +14,12 @@ function AddPlacePopup({ onClose, isOpen, onAddPlace, isLoading }) {
     });
   }
 
-  function handleChangeName(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleChangeLink(evt) {
-    setLink(evt.target.value);
+  function handleChange(evt) {
+    if (evt.target.name === 'name') {
+      setName(evt.target.value);
+    } else if (evt.target.name === 'link') {
+      setLink(evt.target.value);
+    }
   }
 
   // Сбрасываем значения инпутов при повторном открытии попапа
@@ -52,7 +52,7 @@ function AddPlacePopup({ onClose, isOpen, onAddPlace, isLoading }) {
           autoComplete="off"
           id="title-input"
           value={name ?? ''}
-          onChange={handleChangeName}
+          onChange={handleChange}
         />
         <span className="popup__input-error" id="title-input-error"></span>
       </div>
@@ -66,7 +66,7 @@ function AddPlacePopup({ onClose, isOpen, onAddPlace, isLoading }) {
           autoComplete="off"
           id="link-input"
           value={link ?? ''}
-          onChange={handleChangeLink}
+          onChange={handleChange}
         />
         <span className="popup__input-error" id="link-input-error"></span>
       </div>

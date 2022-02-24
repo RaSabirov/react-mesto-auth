@@ -15,12 +15,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     setAbout(currentUser.about);
   }, [currentUser, isOpen]);
 
-  // Обработчик изменения инпута обновляет стейт
-  function handleChangeName(evt) {
-    setName(evt.target.value);
-  }
-  function handleChangeDescription(evt) {
-    setAbout(evt.target.value);
+  function handleChange(evt) {
+    if (evt.target.name === 'firstName-input') {
+      setName(evt.target.value);
+    } else if (evt.target.name === 'job-input') {
+      setAbout(evt.target.value);
+    }
   }
 
   function handleSubmit(evt) {
@@ -48,31 +48,32 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     >
       <div className="popup__input-container">
         <input
-          type="text"
           placeholder="Название"
           className="popup__input popup__input_type_title"
-          name="firstName"
           minLength="2"
           maxLength="30"
           required
           autoComplete="off"
-          id="title-input"
+          id="firstName-input"
+          name="firstName-input"
+          type="text"
           value={name ?? ''}
-          onChange={handleChangeName}
+          onChange={handleChange}
         />
         <span className="popup__input-error" id="title-input-error"></span>
       </div>
       <div className="popup__input-container">
         <input
-          type="text"
           placeholder="Введите описание"
           className="popup__input popup__input_type_job"
           name="aboutMe"
           required
           autoComplete="off"
+          type="text"
+          name="job-input"
           id="job-input"
           value={about ?? ''}
-          onChange={handleChangeDescription}
+          onChange={handleChange}
         />
         <span className="popup__input-error" id="job-input-error"></span>
       </div>

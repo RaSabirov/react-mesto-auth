@@ -7,7 +7,7 @@ function Register({ onRegister }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  function handleChande(evt) {
+  function handleChange(evt) {
     if (evt.target.name === 'email') {
       setEmail(evt.target.value);
     } else if (evt.target.name === 'password') {
@@ -26,7 +26,7 @@ function Register({ onRegister }) {
         section="register"
         title="Регистрация"
         submit={handleSubmit}
-        onChange={handleChande}
+        onChange={handleChange}
         submitName="Зарегистрироваться"
         emailValue={email}
         passwordValue={password}
